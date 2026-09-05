@@ -21,6 +21,37 @@ public class ApplicationDbContext : DbContext
 
         // Apply all entity configurations from this assembly
         modelBuilder.ApplyConfigurationsFromAssembly(typeof(ApplicationDbContext).Assembly);
+
+        // PostgreSQL convention — force all table and column names to lowercase
+        foreach (var entity in modelBuilder.Model.GetEntityTypes())
+        {
+            // Table names to lowercase
+            entity.SetTableName(entity.GetTableName()?.ToLower());
+
+            // Column names to lowercase
+            foreach (var property in entity.GetProperties())
+            {
+                property.SetColumnName(property.GetColumnName().ToLower());
+            }
+
+            // Key names to lowercase
+            foreach (var key in entity.GetKeys())
+            {
+                key.SetName(key.GetName()?.ToLower());
+            }
+
+            // Foreign key names to lowercase
+            foreach (var fk in entity.GetForeignKeys())
+            {
+                fk.SetConstraintName(fk.GetConstraintName()?.ToLower());
+            }
+
+            // Index names to lowercase
+            foreach (var index in entity.GetIndexes())
+            {
+                index.SetDatabaseName(index.GetDatabaseName()?.ToLower());
+            }
+        }
     }
 
     public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)

@@ -29,6 +29,8 @@ services:
 
   # ---------------------------------------------------------------
   # SQL Server
+  # SQL Server 2022 uses mssql-tools18 — health check tries both
+  # paths to work across image versions
   # ---------------------------------------------------------------
   sqlserver:
     image: mcr.microsoft.com/mssql/server:2022-latest
@@ -37,15 +39,16 @@ services:
       - "1433:1433"
     environment:
       - ACCEPT_EULA=Y
-      - SA_PASSWORD=YourStrong@Password123
+      - SA_PASSWORD=CleanTask2024Pwd
       - MSSQL_PID=Express
     volumes:
       - sqlserver_data:/var/opt/mssql
     healthcheck:
-      test: ["CMD-SHELL", "/opt/mssql-tools/bin/sqlcmd -S localhost -U sa -P YourStrong@Password123 -Q 'SELECT 1'"]
-      interval: 10s
-      timeout: 5s
-      retries: 10
+      test: ["CMD-SHELL", "/opt/mssql-tools18/bin/sqlcmd -S localhost -U sa -P 'CleanTask2024Pwd' -Q 'SELECT 1' -C -b || /opt/mssql-tools/bin/sqlcmd -S localhost -U sa -P 'YourStrong@Password123' -Q 'SELECT 1'"]
+      interval: 15s
+      timeout: 10s
+      retries: 15
+      start_period: 30s
 
   # ---------------------------------------------------------------
   # PostgreSQL (switch DatabaseProvider to "PostgreSQL" to use)
@@ -54,7 +57,7 @@ services:
     image: postgres:16-alpine
     container_name: cleantask-postgres
     ports:
-      - "5432:5432"
+      - "5433:5432"
     environment:
       - POSTGRES_DB=cleantaskdb
       - POSTGRES_USER=postgres
