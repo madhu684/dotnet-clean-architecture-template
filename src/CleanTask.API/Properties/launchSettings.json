@@ -1,0 +1,12 @@
+{
+  "profiles": {
+    "CleanTask.API": {
+      "commandName": "Project",
+      "launchBrowser": true,
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      },
+      "applicationUrl": "https://localhost:2652;http://localhost:2653"
+    }
+  }
+}

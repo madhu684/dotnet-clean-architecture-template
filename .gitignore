@@ -1,0 +1,28 @@
+## .NET
+bin/
+obj/
+*.user
+*.suo
+.vs/
+*.swp
+
+## Secrets — never commit these
+appsettings.Production.json
+**/secrets.json
+**/*.pfx
+
+## Rider / VS Code
+.idea/
+.vscode/
+*.DotSettings.user
+
+## Docker
+.dockerignore
+
+## OS
+.DS_Store
+Thumbs.db
+
+## Build output
+publish/
+artifacts/
