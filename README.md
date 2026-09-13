@@ -68,6 +68,7 @@ Domain and Application have zero dependencies on frameworks or infrastructure.
 | Password Hashing | BCrypt.Net |
 | API Docs | Swagger / OpenAPI |
 | Containerisation | Docker + docker-compose |
+| Tests: xUnit · Moq · FluentAssertions — 9 unit tests covering happy paths, failure paths and validation |
 
 ---
 
